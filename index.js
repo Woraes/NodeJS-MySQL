@@ -34,9 +34,15 @@ const titulo = req.body.titulo;
 const qntpages = req.body.qntpages;
 
 //query que é instrução do banco de dados
-const sql =`INSERT INTO livros (titulo, qntpages) VALUES ('${titulo}', '${qntpages}')`
+//const sql =`INSERT INTO livros (titulo, qntpages) VALUES ('${titulo}', '${qntpages}')`
+//segurança para não sofrer sql injection colocamos 2 ? para coluna e ? para dados
+const sql =`INSERT INTO livros (??, ??) VALUES (?, ?)`
+//criamso essa constante com um array para passar os dados passar data na query abaixo
+const data = ['titulo', 'qntpages', titulo, qntpages]
+
+
 //execução da query
-pool.query(sql, function(err){
+pool.query(sql, data, function(err){
     if(err){
         console.log(err);
         return;
@@ -70,9 +76,10 @@ app.get('/livros/:id', (req, res) => {
 
     const id = req.params.id
 
-    const sql = `SELECT * FROM livros WHERE id = '${id}'`
+    const sql = `SELECT * FROM livros WHERE ?? = ?`
+    const data = ['id', id]
 
-    pool.query(sql, function(err, date){
+    pool.query(sql, data, function(err, date){
         if(err){
             console.log(err);
             return
@@ -90,9 +97,10 @@ app.get('/livros/edit/:id', (req, res) => {
 
     const id = req.params.id
 
-    const sql = `SELECT * FROM livros WHERE id = '${id}'`
+    const sql = `SELECT * FROM livros WHERE ?? = ?`
+    const data = ['id', id]
 
-    pool.query(sql, function(err, date){
+    pool.query(sql, data, function(err, date){
         if(err){
             console.log(err);
             return
@@ -112,23 +120,25 @@ app.post('/livros/updatelivro', (req, res) => {
     const titulo = req.body.titulo
     const qntpages = req.body.qntpages;
 
-    const sql = `UPDATE livros SET titulo = '${titulo}', qntpages = '${qntpages}' WHERE id = ${id}`;
-    //comando para puxar o id e voltar para pagina detalhes
-    const sql2 = `SELECT * FROM livros WHERE id = '${id}'`
+   // const sql = `UPDATE livros SET titulo = '${titulo}', qntpages = '${qntpages}' WHERE id = ${id}`;
+    const sql = `UPDATE livros SET ?? = ?, ?? = ? WHERE ?? = ?`;
+    const data = ['titulo', titulo, 'qntpages', qntpages, 'id', id]
+
+    
 
 
-    pool.query(sql)
-    pool.query(sql2, function(err, date){
+    
+    pool.query(sql, data, function(err, date){
         if(err){
             console.log(err);
             return
         }
          
         
-        const livro = date[0]
-        res.render('livro', {livro})
-        console.log(livro)
-        //res.redirect('/livros',{livro})
+        
+        res.redirect('/livros')
+        
+        
     })
 
 })
@@ -137,9 +147,10 @@ app.post('/livros/remove/:id', (req, res) => {
 
     const id = req.params.id
 
-    const sql = `DELETE FROM livros WHERE id = '${id}'`
+    const sql = `DELETE FROM livros WHERE ?? = ?`
+    const data = ['id', id]
 
-    pool.query(sql, function(err) {
+    pool.query(sql, date, function(err) {
         if(err){
             console.log(err);
             return
