@@ -1,6 +1,6 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
-const mysql = require('mysql');
+const pool = require('./db/conex');
 
 
 const app = express();
@@ -36,7 +36,7 @@ const qntpages = req.body.qntpages;
 //query que é instrução do banco de dados
 const sql =`INSERT INTO livros (titulo, qntpages) VALUES ('${titulo}', '${qntpages}')`
 //execução da query
-conex.query(sql, function(err){
+pool.query(sql, function(err){
     if(err){
         console.log(err);
         return;
@@ -50,7 +50,7 @@ conex.query(sql, function(err){
 app.get('/livros', (req, res) => {
 
     const sql = "SELECT * FROM livros"
-    conex.query(sql, function(err, date){
+    pool.query(sql, function(err, date){
         if(err){
             console.log(err);
             return;
@@ -72,7 +72,7 @@ app.get('/livros/:id', (req, res) => {
 
     const sql = `SELECT * FROM livros WHERE id = '${id}'`
 
-    conex.query(sql, function(err, date){
+    pool.query(sql, function(err, date){
         if(err){
             console.log(err);
             return
@@ -92,7 +92,7 @@ app.get('/livros/edit/:id', (req, res) => {
 
     const sql = `SELECT * FROM livros WHERE id = '${id}'`
 
-    conex.query(sql, function(err, date){
+    pool.query(sql, function(err, date){
         if(err){
             console.log(err);
             return
@@ -117,8 +117,8 @@ app.post('/livros/updatelivro', (req, res) => {
     const sql2 = `SELECT * FROM livros WHERE id = '${id}'`
 
 
-    conex.query(sql)
-    conex.query(sql2, function(err, date){
+    pool.query(sql)
+    pool.query(sql2, function(err, date){
         if(err){
             console.log(err);
             return
@@ -139,7 +139,7 @@ app.post('/livros/remove/:id', (req, res) => {
 
     const sql = `DELETE FROM livros WHERE id = '${id}'`
 
-    conex.query(sql, function(err) {
+    pool.query(sql, function(err) {
         if(err){
             console.log(err);
             return
@@ -150,23 +150,6 @@ app.post('/livros/remove/:id', (req, res) => {
 
 })
 
-
-
-
-const conex = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '852456',
-    database: 'nodemysql',
-    
-});
-
-conex.connect(function(err){
-    if (err) {
-        console.log(err);
-    }
-})
- console.log('Connection established Bank');
 
 app.listen(3000, () => {
     console.log('Servidor iniciado')
