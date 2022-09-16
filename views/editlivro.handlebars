@@ -1,0 +1,20 @@
+<div class="card">
+  <div class="card-body">
+   <h2>Edite Seu Livro.</h2>
+  </div>
+</div>
+<form action="/livros/updatelivro" method="post">
+    <input type="hidden" name="id" value="{{livro.id}}" />
+  <div class="mb-3">
+    <label for="titulo" class="form-label">Título:</label>
+    <input type="text" class="form-control" name="titulo" aria-describedby="" value="{{livro.titulo}}">
+    <div id="" class="form-text">Digite o título do seu livro.</div>
+  </div>
+  <div class="mb-3">
+    <label for="qntpages" class="form-label">Número de Páginas:</label>
+    <input type="number" class="form-control" id="" name="qntpages" value="{{livro.qntpages}}">
+    <div id="" class="form-text">Quantas Páginas o Livro Tem.</div>
+  </div>
+  <button type="submit" class="btn btn-success">Editar</button>
+  <a href="/livros" class="btn btn-success">Voltar</a>
+</form>

@@ -1,0 +1,23 @@
+<div class="card">
+  <div class="card-body">
+   <h2>Livros Disponives.</h2>
+   <a href="/" class="btn btn-success">Cadastrar Novo Livro</a>
+   <a class="btn btn-dark" href="/">Voltar</a>
+
+  </div>
+  {{#each livros}}
+  <div class="card-body">
+    
+    <div class="livros-container">
+    #{{this.id}} - <span class="bold"> {{this.titulo}}</span> - {{this.qntpages}} páginas. 
+    
+    </div>
+
+ 
+    <a class="btn btn-info" href="/livros/{{this.id}}">Ver Detalhes</a>
+    
+    
+  </div>
+
+  {{/each}}
+</div>

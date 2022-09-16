@@ -1,0 +1,18 @@
+<div class="card">
+  <div class="card-body">
+   <h2>Cadastre Seu Livro.</h2>
+  </div>
+</div>
+<form action="/livros/iserindolivro" method="post">
+  <div class="mb-3">
+    <label for="titulo" class="form-label">Título:</label>
+    <input type="text" class="form-control" name="titulo" aria-describedby="">
+    <div id="" class="form-text">Digite o título do seu livro.</div>
+  </div>
+  <div class="mb-3">
+    <label for="qntpages" class="form-label">Número de Páginas:</label>
+    <input type="number" class="form-control" id="" name="qntpages">
+    <div id="" class="form-text">Quantas Páginas o Livro Tem.</div>
+  </div>
+  <button type="submit" class="btn btn-success">Cadastrar</button>
+</form>

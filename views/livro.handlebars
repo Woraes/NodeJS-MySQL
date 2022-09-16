@@ -1,0 +1,14 @@
+<div class="card">
+  
+  <div class="card-body">
+   <h1>Sobre o Livro</h1>
+   <h2>{{livro.titulo}}</h2>
+   <p class="bold">Este livro tem {{livro.qntpages}} páginas.</p>
+  </div>
+  <form class="form-details" action="/livros/remove/{{livro.id}}" method="post">
+   <a href="/livros" class="btn btn-success">Voltar</a>
+   <a class="btn btn-warning" href="/livros/edit/{{livro.id}}">Editar</a>
+   <button type="submit" class="btn btn-danger">Deletar</button>
+   </form>
+  
+</div>
